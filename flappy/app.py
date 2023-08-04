@@ -7,13 +7,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/run_script', methods=['POST'])
+@app.route('/run_script')
 def run_script():
     try:
-        subprocess.run(['python', 'main.py'])
-        return "Script executed successfully!"
-    except Exception as e:
-        return f"Error: {str(e)}"
+        subprocess.run(['python', 'flappy.py'], check=True)
+        return 'Python script executed successfully!'
+    except subprocess.CalledProcessError as e:
+        return f'Error: {e}'
 
 if __name__ == '__main__':
     app.run(debug=True)
